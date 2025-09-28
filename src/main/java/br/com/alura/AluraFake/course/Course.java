@@ -1,10 +1,12 @@
 package br.com.alura.AluraFake.course;
 
+import br.com.alura.AluraFake.task.Type;
 import br.com.alura.AluraFake.user.User;
 import jakarta.persistence.*;
 import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Course {
@@ -63,4 +65,6 @@ public class Course {
     public LocalDateTime getPublishedAt() {
         return publishedAt;
     }
+
+
 }

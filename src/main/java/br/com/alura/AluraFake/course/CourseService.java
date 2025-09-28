@@ -14,15 +14,12 @@ public class CourseService {
     @Autowired
     private TaskRepository taskRepository;
 
-    private static final Status PUBLISHED = Status.PUBLISHED;
+    // private static final Status PUBLISHED = Status.PUBLISHED;
 
-    private static final Status BUILDING = Status.BUILDING;
+    // private static final Status BUILDING = Status.BUILDING;
 
     public void createCourse(Course course) {
+        courseRepository.save(course);
 
-        if (course.getStatus() == BUILDING) {
-            
-
-        }
     }
 }

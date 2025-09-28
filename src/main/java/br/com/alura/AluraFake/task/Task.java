@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.hibernate.annotations.GeneratorType;
 import org.hibernate.annotations.IdGeneratorType;
+import org.hibernate.validator.constraints.Length;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,12 +19,13 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.Max;
 
 @Entity
 @Table(name = "task")
 public class Task {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long taskId;
@@ -34,42 +36,50 @@ public class Task {
     @OrderBy("order ASC")
     private Integer order;
     // hash set para manter a ordem e não permitir duplicatas
-    private LinkedHashSet<Options> options;
+    @Size(min = 2, max = 15)
+    @Length(min = 4, max = 80)
+    private LinkedHashSet<Options> options = new LinkedHashSet<>();
     @Enumerated(EnumType.STRING)
     private Type type;
-   
-   
+
     public Long getTaskId() {
         return taskId;
     }
+
     public void setTaskId(Long taskId) {
         this.taskId = taskId;
     }
+
     public String getStatement() {
         return statement;
     }
+
     public void setStatement(String statement) {
         this.statement = statement;
     }
+
     public Integer getOrder() {
         return order;
     }
+
     public void setOrder(Integer order) {
         this.order = order;
     }
+
     public LinkedHashSet<Options> getOptions() {
         return options;
     }
+
     public void setOptions(LinkedHashSet<Options> options) {
         this.options = options;
     }
+
     public Type getType() {
         return type;
     }
+
     public void setType(Type type) {
         this.type = type;
     }
 
-
-    
 }
