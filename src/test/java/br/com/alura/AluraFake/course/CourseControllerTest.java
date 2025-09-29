@@ -3,19 +3,24 @@ package br.com.alura.AluraFake.course;
 import br.com.alura.AluraFake.user.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.*;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(CourseController.class)
+@AutoConfigureMockMvc
 class CourseControllerTest {
 
     @Autowired
@@ -24,8 +29,10 @@ class CourseControllerTest {
     private UserRepository userRepository;
     @MockBean
     private CourseRepository courseRepository;
-    @MockBean
+    @Mock
     private CourseService courseService;
+    @Mock
+    private UserService userService;
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -37,8 +44,10 @@ class CourseControllerTest {
         newCourseDTO.setDescription("Curso de Java");
         newCourseDTO.setEmailInstructor("paulo@alura.com.br");
 
-        doReturn(Optional.empty()).when(userRepository)
-                .findByEmail(newCourseDTO.getEmailInstructor());
+        doReturn(Optional.empty()).when(userService)
+                .findByEmail(newCourseDTO);
+
+        
 
         mockMvc.perform(post("/course/new")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -62,8 +71,8 @@ class CourseControllerTest {
         User user = mock(User.class);
         doReturn(false).when(user).isInstructor();
 
-        doReturn(Optional.of(user)).when(userRepository)
-                .findByEmail(newCourseDTO.getEmailInstructor());
+        doReturn(Optional.of(user)).when(userService)
+                .findByEmail(newCourseDTO);
 
         mockMvc.perform(post("/course/new")
                         .contentType(MediaType.APPLICATION_JSON)

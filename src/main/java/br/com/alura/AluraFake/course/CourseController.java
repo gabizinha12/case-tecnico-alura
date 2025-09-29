@@ -4,6 +4,7 @@ import br.com.alura.AluraFake.user.*;
 import br.com.alura.AluraFake.util.ErrorItemDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.*;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -13,26 +14,24 @@ import java.util.*;
 @RestController
 public class CourseController {
 
+    @Autowired
     private CourseRepository courseRepository;
+    @Autowired
     private  UserRepository userRepository;
 
-    private final CourseService courseService;
-    private final UserService userService;
-
     @Autowired
-    public CourseController(CourseService courseService, UserService userService){
-        this.courseService = courseService;
-        this.userService = userService;
-    }
+    @Qualifier("courseService")
+    private  CourseService courseService;
+    @Autowired
+    @Qualifier("userService")
+    private  UserService userService;
 
     @Transactional
     @PostMapping("/course/new")
     public ResponseEntity createCourse(@Valid @RequestBody NewCourseDTO newCourse) {
 
         //Caso implemente o bonus, pegue o instrutor logado
-        Optional<User> possibleAuthor = userRepository
-                .findByEmail(newCourse.getEmailInstructor())
-                .filter(User::isInstructor);
+        Optional<User> possibleAuthor = userService.findByEmail(newCourse);
 
         if(possibleAuthor.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -47,9 +46,7 @@ public class CourseController {
 
     @GetMapping("/course/all")
     public ResponseEntity<List<CourseListItemDTO>> createCourse() {
-        List<CourseListItemDTO> courses = courseRepository.findAll().stream()
-                .map(CourseListItemDTO::new)
-                .toList();
+        List<CourseListItemDTO> courses = courseService.findAllCourses();
         return ResponseEntity.ok(courses);
     }
 
