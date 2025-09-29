@@ -13,13 +13,16 @@ import java.util.*;
 @RestController
 public class CourseController {
 
-    private final CourseRepository courseRepository;
-    private final UserRepository userRepository;
+    private CourseRepository courseRepository;
+    private  UserRepository userRepository;
+
+    private final CourseService courseService;
+    private final UserService userService;
 
     @Autowired
-    public CourseController(CourseRepository courseRepository, UserRepository userRepository){
-        this.courseRepository = courseRepository;
-        this.userRepository = userRepository;
+    public CourseController(CourseService courseService, UserService userService){
+        this.courseService = courseService;
+        this.userService = userService;
     }
 
     @Transactional
@@ -38,7 +41,7 @@ public class CourseController {
 
         Course course = new Course(newCourse.getTitle(), newCourse.getDescription(), possibleAuthor.get());
 
-        courseRepository.save(course);
+        courseService.createCourse(course);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -52,6 +55,7 @@ public class CourseController {
 
     @PostMapping("/course/{id}/publish")
     public ResponseEntity createCourse(@PathVariable("id") Long id) {
+
         return ResponseEntity.ok().build();
     }
 

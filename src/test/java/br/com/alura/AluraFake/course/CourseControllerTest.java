@@ -24,6 +24,8 @@ class CourseControllerTest {
     private UserRepository userRepository;
     @MockBean
     private CourseRepository courseRepository;
+    @MockBean
+    private CourseService courseService;
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -44,6 +46,8 @@ class CourseControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.field").value("emailInstructor"))
                 .andExpect(jsonPath("$.message").isNotEmpty());
+
+        
     }
 
 
