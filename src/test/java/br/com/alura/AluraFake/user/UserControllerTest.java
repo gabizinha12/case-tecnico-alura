@@ -1,13 +1,13 @@
 package br.com.alura.AluraFake.user;
 
+import br.com.alura.AluraFake.controllers.UserController;
+import br.com.alura.AluraFake.repositories.UserRepository;
+import br.com.alura.AluraFake.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -18,20 +18,18 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserController.class)
-@AutoConfigureMockMvc
 class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    private UserRepository userRepository;
-
     @Mock
-    private UserService userService;
+    private UserRepository userRepository;
 
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private UserService userService;
 
     @Test
     void newUser__should_return_bad_request_when_email_is_blank() throws Exception {
@@ -99,7 +97,7 @@ class UserControllerTest {
     void listAllUsers__should_list_all_users() throws Exception {
         User user1 = new User("User 1", "user1@test.com",Role.STUDENT);
         User user2 = new User("User 2", "user2@test.com",Role.STUDENT);
-        when(userRepository.findAll()).thenReturn(Arrays.asList(user1, user2));
+        when(userService.findAll()).thenReturn(Arrays.asList(user1, user2));
 
         mockMvc.perform(get("/user/all")
                         .contentType(MediaType.APPLICATION_JSON))

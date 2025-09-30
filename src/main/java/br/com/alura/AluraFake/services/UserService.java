@@ -1,30 +1,25 @@
-package br.com.alura.AluraFake.user;
+package br.com.alura.AluraFake.services;
 
-<<<<<<< HEAD
+import java.util.List;
 import java.util.Optional;
 
+import br.com.alura.AluraFake.user.User;
+import br.com.alura.AluraFake.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import br.com.alura.AluraFake.course.NewCourseDTO;
-import br.com.alura.AluraFake.exceptions.UserArleadyExistsException;
 
-=======
-import org.springframework.stereotype.Service;
 
->>>>>>> parent of e87af34 (feat:Create services and inject repositories)
 @Service
-@Primary
 public class UserService {
 
-<<<<<<< HEAD
     @Autowired
     private UserRepository userRepository;
 
-    public void createUser(User user) throws UserArleadyExistsException {
+    public void createUser(User user)  throws Exception{
         if (userRepository.existsByEmail(user.getEmail())) {
-            throw new UserArleadyExistsException("User with email   " + user.getEmail() + " arleady exists");
+            throw new Exception("User with email   " + user.getEmail() + " arleady exists");
         } else {
             userRepository.save(user);
         }
@@ -36,6 +31,9 @@ public class UserService {
                 .filter(User::isInstructor);
         return possibleAuthor;
     }
-=======
->>>>>>> parent of e87af34 (feat:Create services and inject repositories)
+
+    public List<User> findAll() {
+        List<User> user = userRepository.findAll();
+        return user;
+    }
 }

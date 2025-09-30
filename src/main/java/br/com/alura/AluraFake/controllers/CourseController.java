@@ -1,10 +1,13 @@
-package br.com.alura.AluraFake.course;
+package br.com.alura.AluraFake.controllers;
 
+import br.com.alura.AluraFake.course.Course;
+import br.com.alura.AluraFake.course.NewCourseDTO;
+import br.com.alura.AluraFake.services.CourseService;
+import br.com.alura.AluraFake.services.UserService;
 import br.com.alura.AluraFake.user.*;
 import br.com.alura.AluraFake.util.ErrorItemDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.*;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -15,16 +18,9 @@ import java.util.*;
 public class CourseController {
 
     @Autowired
-    private CourseRepository courseRepository;
+    private CourseService courseService;
     @Autowired
-    private  UserRepository userRepository;
-
-    @Autowired
-    @Qualifier("courseService")
-    private  CourseService courseService;
-    @Autowired
-    @Qualifier("userService")
-    private  UserService userService;
+    private UserService userService;
 
     @Transactional
     @PostMapping("/course/new")
@@ -45,14 +41,13 @@ public class CourseController {
     }
 
     @GetMapping("/course/all")
-    public ResponseEntity<List<CourseListItemDTO>> createCourse() {
-        List<CourseListItemDTO> courses = courseService.findAllCourses();
+    public ResponseEntity<List<Course>> createCourse() {
+        List<Course> courses = courseService.findAllCourses();
         return ResponseEntity.ok(courses);
     }
 
     @PostMapping("/course/{id}/publish")
     public ResponseEntity createCourse(@PathVariable("id") Long id) {
-
         return ResponseEntity.ok().build();
     }
 

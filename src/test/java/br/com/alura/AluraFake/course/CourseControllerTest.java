@@ -1,14 +1,14 @@
 package br.com.alura.AluraFake.course;
 
+import br.com.alura.AluraFake.controllers.CourseController;
+import br.com.alura.AluraFake.services.CourseService;
+import br.com.alura.AluraFake.services.UserService;
 import br.com.alura.AluraFake.user.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -20,21 +20,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(CourseController.class)
-@AutoConfigureMockMvc
 class CourseControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-    @MockBean
-    private UserRepository userRepository;
-    @MockBean
-    private CourseRepository courseRepository;
-    @Mock
-    private CourseService courseService;
-    @Mock
-    private UserService userService;
     @Autowired
     private ObjectMapper objectMapper;
+    @Mock
+    private UserService userService;
+    @Mock
+    private CourseService courseService;
 
     @Test
     void newCourseDTO__should_return_bad_request_when_email_is_invalid() throws Exception {
@@ -72,7 +67,7 @@ class CourseControllerTest {
         doReturn(false).when(user).isInstructor();
 
         doReturn(Optional.of(user)).when(userService)
-                .findByEmail(newCourseDTO);
+                        .findByEmail(newCourseDTO);
 
         mockMvc.perform(post("/course/new")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -93,14 +88,14 @@ class CourseControllerTest {
         User user = mock(User.class);
         doReturn(true).when(user).isInstructor();
 
-        doReturn(Optional.of(user)).when(userRepository).findByEmail(newCourseDTO.getEmailInstructor());
+        doReturn(Optional.of(user)).when(userService).findByEmail(newCourseDTO);
 
         mockMvc.perform(post("/course/new")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newCourseDTO)))
                 .andExpect(status().isCreated());
 
-        verify(courseRepository, times(1)).save(any(Course.class));
+        verify(courseService, times(1)).createCourse(any(Course.class));
     }
 
     @Test
@@ -111,7 +106,7 @@ class CourseControllerTest {
         Course hibernate = new Course("Hibernate", "Curso de hibernate", paulo);
         Course spring = new Course("Spring", "Curso de spring", paulo);
 
-        when(courseRepository.findAll()).thenReturn(Arrays.asList(java, hibernate, spring));
+        when(courseService.findAllCourses()).thenReturn(Arrays.asList(java, hibernate, spring));
 
         mockMvc.perform(get("/course/all")
                         .contentType(MediaType.APPLICATION_JSON))

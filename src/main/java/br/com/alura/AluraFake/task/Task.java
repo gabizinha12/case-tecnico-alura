@@ -4,18 +4,9 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.hibernate.annotations.GeneratorType;
-import org.hibernate.annotations.IdGeneratorType;
+import jakarta.persistence.*;
 import org.hibernate.validator.constraints.Length;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.Max;
@@ -35,10 +26,15 @@ public class Task {
     // hash set para manter a ordem e não permitir duplicatas
     @Size(min = 2, max = 15)
     @Length(min = 4, max = 80)
+    @OneToMany(cascade = CascadeType.ALL)
     private LinkedHashSet<Options> options = new LinkedHashSet<>();
     @Enumerated(EnumType.STRING)
     private Type type;
-<<<<<<< HEAD
+
+    @Deprecated
+    public Task() {
+
+    }
 
     public Long getTaskId() {
         return taskId;
@@ -79,7 +75,5 @@ public class Task {
     public void setType(Type type) {
         this.type = type;
     }
-=======
->>>>>>> parent of 1c0b236 (feat: Start writing logic for course publishing, tasks and users)
 
 }
