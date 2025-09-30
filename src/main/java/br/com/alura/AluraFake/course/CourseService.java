@@ -17,6 +17,7 @@ public class CourseService {
 
     // private static final Status PUBLISHED = Status.PUBLISHED;
 
+<<<<<<< HEAD
     // private static final Status BUILDING = Status.BUILDING;
 
     public void createCourse(Course course) {
@@ -30,4 +31,8 @@ public class CourseService {
                 .toList();
         return courses;
     }
+=======
+
+    
+>>>>>>> parent of 1c0b236 (feat: Start writing logic for course publishing, tasks and users)
 }

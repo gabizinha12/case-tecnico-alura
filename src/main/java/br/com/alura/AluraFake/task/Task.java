@@ -15,8 +15,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
@@ -27,13 +25,12 @@ import jakarta.validation.constraints.Max;
 public class Task {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long taskId;
     @Min(4)
     @Max(255)
     @Column(unique = true)
     private String statement;
-    @OrderBy("order ASC")
     private Integer order;
     // hash set para manter a ordem e não permitir duplicatas
     @Size(min = 2, max = 15)
@@ -41,6 +38,7 @@ public class Task {
     private LinkedHashSet<Options> options = new LinkedHashSet<>();
     @Enumerated(EnumType.STRING)
     private Type type;
+<<<<<<< HEAD
 
     public Long getTaskId() {
         return taskId;
@@ -81,5 +79,7 @@ public class Task {
     public void setType(Type type) {
         this.type = type;
     }
+=======
+>>>>>>> parent of 1c0b236 (feat: Start writing logic for course publishing, tasks and users)
 
 }

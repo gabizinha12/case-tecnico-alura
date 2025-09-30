@@ -16,6 +16,7 @@ public class Options {
     @Column(unique = true)
     private String name;
     boolean isCorrect;
+
     @ManyToOne
     private Task task;
 }
