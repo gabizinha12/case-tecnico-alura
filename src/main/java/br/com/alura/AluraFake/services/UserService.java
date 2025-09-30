@@ -3,15 +3,18 @@ package br.com.alura.AluraFake.services;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.alura.AluraFake.user.NewUserDTO;
 import br.com.alura.AluraFake.user.User;
 import br.com.alura.AluraFake.repositories.UserRepository;
+
+import org.hibernate.validator.internal.util.privilegedactions.NewSchema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.alura.AluraFake.course.NewCourseDTO;
 
 
-@Service
+@Service("userService")
 public class UserService {
 
     @Autowired
@@ -25,11 +28,17 @@ public class UserService {
         }
     }
 
-    public Optional<User> findByEmail(NewCourseDTO newCourse) {
+    public Optional<User> findByEmailPossibleInstructor(NewCourseDTO newCourse) {
         Optional<User> possibleAuthor = userRepository
                 .findByEmail(newCourse.getEmailInstructor())
                 .filter(User::isInstructor);
         return possibleAuthor;
+    }
+
+      public boolean findByEmailUser(NewUserDTO newUserDTO) {
+        boolean userExists = userRepository
+                .findByEmail(newUserDTO.getEmail()).isPresent();
+        return userExists;
     }
 
     public List<User> findAll() {
