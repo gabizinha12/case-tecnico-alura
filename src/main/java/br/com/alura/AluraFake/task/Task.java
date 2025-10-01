@@ -32,7 +32,19 @@ public class Task {
     private Type type;
 
     @Deprecated
-    public Task() {}
+    public Task() {
+    }
+
+    public Task(Long taskId, @Min(4) @Max(255) String statement, Integer order,
+            @Size(min = 2, max = 15) @Length(min = 4, max = 80) LinkedHashSet<Options> options, Type type) {
+        this.taskId = taskId;
+        this.statement = statement;
+        this.order = order;
+        this.options = options;
+        this.type = type;
+    }
+
+
 
     public Long getTaskId() {
         return taskId;

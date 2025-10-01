@@ -8,18 +8,20 @@ import jakarta.validation.constraints.NotNull;
 
 public class NewOpenTextTaskDTO {
 
-
     public Type type = Type.OPEN_TEXT;
     @NotNull
     @Length(min = 4, max = 255)
     public String statement;
+    private Integer order;
 
     @Deprecated
-    public NewOpenTextTaskDTO() {}
+    public NewOpenTextTaskDTO() {
+    }
 
-    public NewOpenTextTaskDTO(Type type, @NotNull @Length(min = 4, max = 255) String statement) {
+    public NewOpenTextTaskDTO(Type type, @NotNull @Length(min = 4, max = 255) String statement, Integer order) {
         this.type = type;
         this.statement = statement;
+        this.order = order;
     }
 
     public Type getType() {
@@ -38,11 +40,16 @@ public class NewOpenTextTaskDTO {
         this.statement = statement;
     }
 
-
     public OpenTextTask toEntity() {
-        return new OpenTextTask(type, statement);
+        return new OpenTextTask(null, null, this.statement, this.type, this.order);
+
     }
-    
-    
-    
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
+    }
 }

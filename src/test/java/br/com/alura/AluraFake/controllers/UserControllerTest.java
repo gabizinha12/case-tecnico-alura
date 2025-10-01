@@ -17,6 +17,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -33,7 +36,7 @@ class UserControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
-    @Autowired
+    @Mock
     private UserService userService;
 
     @Test
@@ -43,7 +46,7 @@ class UserControllerTest {
         newUserDTO.setName("Caio Bugorin");
         newUserDTO.setRole(Role.STUDENT);
 
-        when(userRepository.existsByEmail(newUserDTO.getEmail())).thenReturn(true);
+        when(userService.findByEmailUser(anyString())).thenThrow(IllegalArgumentException.class);
 
         mockMvc.perform(post("/user/new")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -60,7 +63,7 @@ class UserControllerTest {
         newUserDTO.setName("Caio Bugorin");
         newUserDTO.setRole(Role.STUDENT);
 
-        when(userRepository.existsByEmail(newUserDTO.getEmail())).thenReturn(true);
+        when(userService.findByEmailUser(anyString())).thenThrow(IllegalArgumentException.class);
 
         mockMvc.perform(post("/user/new")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -77,7 +80,7 @@ class UserControllerTest {
         newUserDTO.setName("Caio Bugorin");
         newUserDTO.setRole(Role.STUDENT);
 
-        when(userRepository.existsByEmail(newUserDTO.getEmail())).thenReturn(true);
+        when(userService.findByEmailUser(newUserDTO.getEmail())).thenReturn(true);
 
         mockMvc.perform(post("/user/new")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -94,7 +97,7 @@ class UserControllerTest {
         newUserDTO.setName("Caio Bugorin");
         newUserDTO.setRole(Role.STUDENT);
 
-        when(userRepository.existsByEmail(newUserDTO.getEmail())).thenReturn(false);
+       when(userService.findByEmailUser(newUserDTO.getEmail())).thenReturn(true);
 
         mockMvc.perform(post("/user/new")
                         .contentType(MediaType.APPLICATION_JSON)

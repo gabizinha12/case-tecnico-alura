@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import br.com.alura.AluraFake.user.User;
+import jakarta.persistence.EntityNotFoundException;
 import br.com.alura.AluraFake.dtos.NewCourseDTO;
 import br.com.alura.AluraFake.dtos.NewUserDTO;
 import br.com.alura.AluraFake.repositories.UserRepository;
@@ -12,14 +13,13 @@ import org.hibernate.validator.internal.util.privilegedactions.NewSchema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service("userService")
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
 
-    public void createUser(User user)  throws Exception{
+    public void createUser(User user) throws Exception {
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new Exception("User with email   " + user.getEmail() + " arleady exists");
         } else {
@@ -34,14 +34,26 @@ public class UserService {
         return possibleAuthor;
     }
 
-      public boolean findByEmailUser(NewUserDTO newUserDTO) {
-        boolean userExists = userRepository
-                .findByEmail(newUserDTO.getEmail()).isPresent();
+    public boolean findByEmailUser(String email) {
+        boolean userExists;
+        if (email != null && !email.isBlank()) {
+            userExists = userRepository.existsByEmail(email);
+        } else {
+            throw new IllegalArgumentException("Email is null");
+        }
         return userExists;
+
     }
 
     public List<User> findAll() {
         List<User> user = userRepository.findAll();
         return user;
+    }
+
+    public Optional<User> findById(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        // pesquisa por usuario, caso não exista retorna um Optional vazio
+        return user.isPresent() ? user : Optional.empty();
+
     }
 }

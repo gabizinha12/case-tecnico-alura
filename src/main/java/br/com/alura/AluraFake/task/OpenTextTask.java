@@ -2,7 +2,10 @@ package br.com.alura.AluraFake.task;
 
 import br.com.alura.AluraFake.course.Course;
 import br.com.alura.AluraFake.dtos.NewOpenTextTaskDTO;
+import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -15,24 +18,33 @@ import jakarta.persistence.Table;
 public class OpenTextTask {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @ManyToOne
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     private Course course;
     private String description;
     private Type type = Type.OPEN_TEXT;
+    private Integer order;
 
     @Deprecated
-    public OpenTextTask() {
-    }
+    public OpenTextTask() {}
 
-    public OpenTextTask(Type type, String description) {
-        this.type = Type.OPEN_TEXT;
-        this.description = description;
-    }
+  
 
     public String getDescription() {
         return description;
     }
+
+    public OpenTextTask(Long id, Course course, String description, Type type, Integer order) {
+        this.id = id;
+        this.course = course;
+        this.description = description;
+        this.type = type;
+        this.order = order;
+    }
+
+
 
     public void setDescription(String description) {
         this.description = description;
@@ -54,8 +66,20 @@ public class OpenTextTask {
         this.course = course;
     }
 
-    public NewOpenTextTaskDTO toDTO() {
-        return new NewOpenTextTaskDTO(Type.OPEN_TEXT, description);
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
 }

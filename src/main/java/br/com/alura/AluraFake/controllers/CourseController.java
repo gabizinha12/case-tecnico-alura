@@ -17,7 +17,6 @@ import java.util.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @RestController
 public class CourseController {
 
@@ -32,16 +31,14 @@ public class CourseController {
     @PostMapping("/course/new")
     public ResponseEntity createCourse(@Valid @RequestBody NewCourseDTO newCourse) {
 
-        //Caso implemente o bonus, pegue o instrutor logado
+        // Caso implemente o bonus, pegue o instrutor logado
         Optional<User> possibleAuthor = userService.findByEmailPossibleInstructor(newCourse);
 
-        if(possibleAuthor.isEmpty()) {
+        if (possibleAuthor.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ErrorItemDTO("emailInstructor", "Usuário não é um instrutor"));
         }
-
         Course course = new Course(newCourse.getTitle(), newCourse.getDescription(), possibleAuthor.get());
-
         courseService.createCourse(course);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -56,6 +53,5 @@ public class CourseController {
     public ResponseEntity<Course> publishCourse(@PathVariable("id") Long id) {
         return ResponseEntity.ok().build();
     }
-
 
 }

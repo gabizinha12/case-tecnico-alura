@@ -3,6 +3,7 @@ package br.com.alura.AluraFake.course;
 import br.com.alura.AluraFake.AluraFakeApplication;
 import br.com.alura.AluraFake.controllers.CourseController;
 import br.com.alura.AluraFake.dtos.NewCourseDTO;
+import br.com.alura.AluraFake.repositories.CourseRepository;
 import br.com.alura.AluraFake.services.CourseService;
 import br.com.alura.AluraFake.services.UserService;
 import br.com.alura.AluraFake.user.*;
@@ -35,6 +36,9 @@ class CourseControllerTest {
     private UserService userService;
     @Mock
     private CourseService courseService;
+
+    @Mock
+    private CourseRepository courseRepository;
 
     @Test
     void newCourseDTO__should_return_bad_request_when_email_is_invalid() throws Exception {
@@ -99,7 +103,7 @@ class CourseControllerTest {
                         .content(objectMapper.writeValueAsString(newCourseDTO)))
                 .andExpect(status().isCreated());
 
-        verify(courseService, times(1)).createCourse(any(Course.class));
+        verify(courseRepository, times(1)).save(any(Course.class));
     }
 
     @Test
