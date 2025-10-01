@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 @Component
 public interface TaskRepository extends JpaRepository<Task, Long>{
 
+    
+
 }

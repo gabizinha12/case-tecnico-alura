@@ -32,9 +32,7 @@ public class Task {
     private Type type;
 
     @Deprecated
-    public Task() {
-
-    }
+    public Task() {}
 
     public Long getTaskId() {
         return taskId;

@@ -3,15 +3,14 @@ package br.com.alura.AluraFake.services;
 import java.util.List;
 import java.util.Optional;
 
-import br.com.alura.AluraFake.user.NewUserDTO;
 import br.com.alura.AluraFake.user.User;
+import br.com.alura.AluraFake.dtos.NewCourseDTO;
+import br.com.alura.AluraFake.dtos.NewUserDTO;
 import br.com.alura.AluraFake.repositories.UserRepository;
 
 import org.hibernate.validator.internal.util.privilegedactions.NewSchema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import br.com.alura.AluraFake.course.NewCourseDTO;
 
 
 @Service("userService")

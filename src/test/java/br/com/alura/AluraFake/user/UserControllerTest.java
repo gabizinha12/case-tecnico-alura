@@ -2,6 +2,7 @@ package br.com.alura.AluraFake.user;
 
 import br.com.alura.AluraFake.AluraFakeApplication;
 import br.com.alura.AluraFake.controllers.UserController;
+import br.com.alura.AluraFake.dtos.NewUserDTO;
 import br.com.alura.AluraFake.repositories.UserRepository;
 import br.com.alura.AluraFake.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,6 +43,8 @@ class UserControllerTest {
         newUserDTO.setName("Caio Bugorin");
         newUserDTO.setRole(Role.STUDENT);
 
+        when(userRepository.existsByEmail(newUserDTO.getEmail())).thenReturn(true);
+
         mockMvc.perform(post("/user/new")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newUserDTO)))
@@ -56,6 +59,8 @@ class UserControllerTest {
         newUserDTO.setEmail("caio");
         newUserDTO.setName("Caio Bugorin");
         newUserDTO.setRole(Role.STUDENT);
+
+        when(userRepository.existsByEmail(newUserDTO.getEmail())).thenReturn(true);
 
         mockMvc.perform(post("/user/new")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -101,6 +106,7 @@ class UserControllerTest {
     void listAllUsers__should_list_all_users() throws Exception {
         User user1 = new User("User 1", "user1@test.com",Role.STUDENT);
         User user2 = new User("User 2", "user2@test.com",Role.STUDENT);
+        
         when(userService.findAll()).thenReturn(Arrays.asList(user1, user2));
 
         mockMvc.perform(get("/user/all")

@@ -1,7 +1,7 @@
 package br.com.alura.AluraFake.controllers;
 
 import br.com.alura.AluraFake.course.Course;
-import br.com.alura.AluraFake.course.NewCourseDTO;
+import br.com.alura.AluraFake.dtos.NewCourseDTO;
 import br.com.alura.AluraFake.services.CourseService;
 import br.com.alura.AluraFake.services.UserService;
 import br.com.alura.AluraFake.user.*;
@@ -14,6 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 public class CourseController {
@@ -44,14 +47,15 @@ public class CourseController {
     }
 
     @GetMapping("/course/all")
-    public ResponseEntity<List<Course>> createCourse() {
+    public ResponseEntity<List<Course>> findAllCourses() {
         List<Course> courses = courseService.findAllCourses();
         return ResponseEntity.ok(courses);
     }
 
     @PostMapping("/course/{id}/publish")
-    public ResponseEntity createCourse(@PathVariable("id") Long id) {
+    public ResponseEntity<Course> publishCourse(@PathVariable("id") Long id) {
         return ResponseEntity.ok().build();
     }
+
 
 }

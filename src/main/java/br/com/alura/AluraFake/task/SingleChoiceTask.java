@@ -1,6 +1,5 @@
 package br.com.alura.AluraFake.task;
 
-public class MultipleChoiceTask {
-    
+public class SingleChoiceTask {
 
 }

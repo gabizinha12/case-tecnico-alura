@@ -2,6 +2,7 @@ package br.com.alura.AluraFake.course;
 
 import br.com.alura.AluraFake.AluraFakeApplication;
 import br.com.alura.AluraFake.controllers.CourseController;
+import br.com.alura.AluraFake.dtos.NewCourseDTO;
 import br.com.alura.AluraFake.services.CourseService;
 import br.com.alura.AluraFake.services.UserService;
 import br.com.alura.AluraFake.user.*;
