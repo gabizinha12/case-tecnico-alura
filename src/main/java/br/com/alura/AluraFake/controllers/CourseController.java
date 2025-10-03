@@ -39,7 +39,7 @@ public class CourseController {
         if (possibleAuthor.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ErrorItemDTO("emailInstructor", "Usuário não é um instrutor"));
-        } else  {
+        } else if(!possibleAuthor.isEmpty()) {
             Course course = new Course(newCourse.getId(), newCourse.getTitle(), newCourse.getDescription(), possibleAuthor.get(), Status.BUILDING);
             courseService.createCourse(course);
 
@@ -55,7 +55,11 @@ public class CourseController {
 
     @PostMapping("/course/{id}/publish")
     public ResponseEntity<Course> publishCourse(@PathVariable("id") Long id) {
-        return ResponseEntity.ok().build();
+        NewCourseDTO newCourse = new NewCourseDTO();
+        Optional<User> possibleAuthor = userService.findByEmailPossibleInstructor(newCourse);
+        Course course = new Course(newCourse.getId(), newCourse.getTitle(), newCourse.getDescription(), possibleAuthor.get(), Status.BUILDING);
+        courseService.publishCourse(course);
+        return ResponseEntity.ok().body(course);
     }
 
 }

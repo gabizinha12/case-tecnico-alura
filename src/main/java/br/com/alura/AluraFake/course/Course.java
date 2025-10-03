@@ -29,6 +29,8 @@ public class Course  implements Serializable{
     private Status status;
     private LocalDateTime publishedAt;
 
+
+
     public Course(){}
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -83,6 +85,8 @@ public class Course  implements Serializable{
         this.courseId = courseId;
     }
 
-  
+      public void setPublishedAt(LocalDateTime publishedAt) {
+        this.publishedAt = publishedAt;
+    }
 
 }
