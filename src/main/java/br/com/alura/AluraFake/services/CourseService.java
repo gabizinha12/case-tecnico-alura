@@ -24,6 +24,7 @@ public class CourseService {
         if(course.getStatus() != BUILDING || !course.getInstructor().isInstructor()) {
             throw new RuntimeException("You cant publish a course if the status isnt building");
         }
+        // muda status do curso e atualiza data de publicação
         course.setStatus(PUBLISHED);
         course.setPublishedAt(LocalDateTime.now());
         courseRepository.save(course);

@@ -28,6 +28,7 @@ public class Course  implements Serializable{
     @Enumerated(EnumType.STRING)
     private Status status;
     private LocalDateTime publishedAt;
+    
 
 
 
