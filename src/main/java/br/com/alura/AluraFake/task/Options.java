@@ -12,27 +12,14 @@ public class Options {
     @Column(unique = true)
     private String name;
     boolean isCorrect;
-    @ManyToOne
-    @JoinColumn(name = "task_id")
-    private Task task;
-
+  
     @Deprecated
     public Options() {}
 
-    public Options(Long id, String name, boolean isCorrect, Task task) {
+    public Options(Long id, String name, boolean isCorrect) {
         this.id = id;
         this.name = name;
         this.isCorrect = isCorrect;
-        this.task = task;
-    }
-
-
-    public Task getTask() {
-        return task;
-    }
-
-    public void setTask(Task task) {
-        this.task = task;
     }
 
     public Long getId() {

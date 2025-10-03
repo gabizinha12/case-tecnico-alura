@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import br.com.alura.AluraFake.dtos.NewOpenTextTaskDTO;
 import br.com.alura.AluraFake.services.TaskService;
 import br.com.alura.AluraFake.task.OpenTextTask;
-import br.com.alura.AluraFake.task.Task;
 import jakarta.validation.Valid;
 
 @RestController

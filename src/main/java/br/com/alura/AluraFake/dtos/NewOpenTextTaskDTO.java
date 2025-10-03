@@ -2,27 +2,39 @@ package br.com.alura.AluraFake.dtos;
 
 import org.hibernate.validator.constraints.Length;
 
+import br.com.alura.AluraFake.course.Course;
 import br.com.alura.AluraFake.task.OpenTextTask;
 import br.com.alura.AluraFake.task.Type;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 
 public class NewOpenTextTaskDTO {
 
-    public Type type = Type.OPEN_TEXT;
+    
+    private Long id;
+    @Enumerated
+    public Type type;
     @NotNull
     @Length(min = 4, max = 255)
     public String statement;
     private Integer order;
+    private Integer courseId;
 
-    @Deprecated
     public NewOpenTextTaskDTO() {
     }
 
-    public NewOpenTextTaskDTO(Type type, @NotNull @Length(min = 4, max = 255) String statement, Integer order) {
+
+
+    public NewOpenTextTaskDTO(Long id, Type type, @NotNull @Length(min = 4, max = 255) String statement, Integer order,
+            Integer courseId) {
+        this.id = id;
         this.type = type;
         this.statement = statement;
         this.order = order;
+        this.courseId = courseId;
     }
+
+
 
     public Type getType() {
         return type;
@@ -40,10 +52,22 @@ public class NewOpenTextTaskDTO {
         this.statement = statement;
     }
 
-    public OpenTextTask toEntity() {
-        return new OpenTextTask(null, null, this.statement, this.type, this.order);
+   
 
+
+    public Long getId() {
+        return id;
     }
+
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+
+
 
     public Integer getOrder() {
         return order;
@@ -52,4 +76,22 @@ public class NewOpenTextTaskDTO {
     public void setOrder(Integer order) {
         this.order = order;
     }
+
+
+
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
+
+
+
+   
+  
+
 }

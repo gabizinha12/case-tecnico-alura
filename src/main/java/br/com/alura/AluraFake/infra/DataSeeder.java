@@ -1,9 +1,10 @@
 package br.com.alura.AluraFake.infra;
 
 import br.com.alura.AluraFake.course.*;
-import br.com.alura.AluraFake.repositories.CourseRepository;
-import br.com.alura.AluraFake.repositories.UserRepository;
-import br.com.alura.AluraFake.user.*;
+import br.com.alura.AluraFake.repositories.*;
+import br.com.alura.AluraFake.user.Role;
+import br.com.alura.AluraFake.user.User;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -32,7 +33,7 @@ public class DataSeeder implements CommandLineRunner {
             User caio = new User("Caio", "caio@alura.com.br", Role.STUDENT);
             User paulo = new User("Paulo", "paulo@alura.com.br", Role.INSTRUCTOR);
             userRepository.saveAll(Arrays.asList(caio, paulo));
-            courseRepository.save(new Course("Java", "Aprenda Java com Alura", paulo));
+            courseRepository.save(new Course());
         }
     }
 }

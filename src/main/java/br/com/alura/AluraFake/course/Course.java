@@ -5,15 +5,21 @@ import br.com.alura.AluraFake.user.User;
 import jakarta.persistence.*;
 import org.springframework.util.Assert;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-public class Course {
+public class Course  implements Serializable{
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long courseId;
     private LocalDateTime createdAt = LocalDateTime.now();
     private String title;
     private String description;
@@ -23,19 +29,22 @@ public class Course {
     private Status status;
     private LocalDateTime publishedAt;
 
-    @Deprecated
     public Course(){}
 
-    public Course(String title, String description, User instructor) {
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    public Course( @JsonProperty("courseId") Long courseId, @JsonProperty("title") String title, @JsonProperty("description") String description, User instructor,
+            Status status) {
+        this.courseId = courseId;
         Assert.isTrue(instructor.isInstructor(), "Usuario deve ser um instrutor");
         this.title = title;
-        this.instructor = instructor;
         this.description = description;
+        this.instructor = instructor;
+        this.status = status;
         this.status = Status.BUILDING;
     }
 
     public Long getId() {
-        return id;
+        return courseId;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -66,5 +75,14 @@ public class Course {
         return publishedAt;
     }
 
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
+    }
+
+  
 
 }

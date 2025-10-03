@@ -22,10 +22,22 @@ public class UserService {
     public void createUser(User user) throws Exception {
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new Exception("User with email   " + user.getEmail() + " arleady exists");
-        } else {
-            userRepository.save(user);
+        } else  if(user.getEmail().isEmpty() && user.getEmail().isBlank()){
+          throw new Exception("Email inválido");
         }
+        userRepository.save(user);
     }
+
+    
+    public void createInstructor(User user) throws Exception {
+          if (userRepository.existsByEmail(user.getEmail())) {
+            throw new Exception("User with email   " + user.getEmail() + " arleady exists");
+        } else  if(user.getEmail().isEmpty() && user.getEmail().isBlank()){
+          throw new Exception("Email inválido");
+        }
+        userRepository.save(user);
+    }
+
 
     public Optional<User> findByEmailPossibleInstructor(NewCourseDTO newCourse) {
         Optional<User> possibleAuthor = userRepository

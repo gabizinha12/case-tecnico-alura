@@ -1,12 +1,15 @@
-package br.com.alura.AluraFake.course;
+package br.com.alura.AluraFake.controllers;
 
 import br.com.alura.AluraFake.AluraFakeApplication;
 import br.com.alura.AluraFake.controllers.CourseController;
+import br.com.alura.AluraFake.course.Course;
 import br.com.alura.AluraFake.dtos.NewCourseDTO;
-import br.com.alura.AluraFake.repositories.CourseRepository;
+import br.com.alura.AluraFake.repositories.*;
 import br.com.alura.AluraFake.services.CourseService;
 import br.com.alura.AluraFake.services.UserService;
-import br.com.alura.AluraFake.user.*;
+import br.com.alura.AluraFake.user.Role;
+import br.com.alura.AluraFake.user.User;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -108,11 +111,11 @@ class CourseControllerTest {
 
     @Test
     void listAllCourses__should_list_all_courses() throws Exception {
-        User paulo = new User("Paulo", "paulo@alua.com.br", Role.INSTRUCTOR);
+        User paulo = new User("Paulo", "paulo@alura.com.br", Role.INSTRUCTOR);
 
-        Course java = new Course("Java", "Curso de java", paulo);
-        Course hibernate = new Course("Hibernate", "Curso de hibernate", paulo);
-        Course spring = new Course("Spring", "Curso de spring", paulo);
+        Course java = new Course();
+        Course hibernate = new Course();
+        Course spring = new Course();
 
         when(courseService.findAllCourses()).thenReturn(Arrays.asList(java, hibernate, spring));
 

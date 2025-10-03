@@ -1,10 +1,12 @@
 package br.com.alura.AluraFake.controllers;
 
 import br.com.alura.AluraFake.course.Course;
+import br.com.alura.AluraFake.course.Status;
 import br.com.alura.AluraFake.dtos.NewCourseDTO;
+import br.com.alura.AluraFake.repositories.*;
 import br.com.alura.AluraFake.services.CourseService;
 import br.com.alura.AluraFake.services.UserService;
-import br.com.alura.AluraFake.user.*;
+import br.com.alura.AluraFake.user.User;
 import br.com.alura.AluraFake.util.ErrorItemDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +39,11 @@ public class CourseController {
         if (possibleAuthor.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ErrorItemDTO("emailInstructor", "Usuário não é um instrutor"));
+        } else  {
+            Course course = new Course(newCourse.getId(), newCourse.getTitle(), newCourse.getDescription(), possibleAuthor.get(), Status.BUILDING);
+            courseService.createCourse(course);
+
         }
-        Course course = new Course(newCourse.getTitle(), newCourse.getDescription(), possibleAuthor.get());
-        courseService.createCourse(course);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

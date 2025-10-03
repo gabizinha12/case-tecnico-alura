@@ -1,9 +1,20 @@
 package br.com.alura.AluraFake.task;
 
+import org.springframework.core.serializer.DefaultSerializer;
+import org.springframework.core.serializer.Deserializer;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import br.com.alura.AluraFake.course.Course;
 import br.com.alura.AluraFake.dtos.NewOpenTextTaskDTO;
 import jakarta.annotation.Generated;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,32 +27,31 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "open_text_task")
 public class OpenTextTask {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "course_id", referencedColumnName = "id")
-    private Course course;
+    private Integer courseId;
+    @Column(name = "description", length = 255)
     private String description;
-    private Type type = Type.OPEN_TEXT;
-    private Integer order;
+    @Enumerated(EnumType.STRING)
+    private Type type;
+    @Column(name="task_order")
+    private Integer taskOrder;
 
-    @Deprecated
+    @JsonCreator
     public OpenTextTask() {}
 
-  
 
     public String getDescription() {
         return description;
     }
 
-    public OpenTextTask(Long id, Course course, String description, Type type, Integer order) {
+    @JsonCreator
+    public OpenTextTask(Long id,@JsonProperty Integer courseId,@JsonProperty String description, @JsonProperty Type type,@JsonProperty Integer taskOrder) {
         this.id = id;
-        this.course = course;
+        this.courseId = courseId;
         this.description = description;
         this.type = type;
-        this.order = order;
+        this.taskOrder = taskOrder;
     }
 
 
@@ -58,20 +68,13 @@ public class OpenTextTask {
         this.type = type;
     }
 
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
 
     public Integer getOrder() {
-        return order;
+        return taskOrder;
     }
 
     public void setOrder(Integer order) {
-        this.order = order;
+        this.taskOrder = order;
     }
 
     public Long getId() {
@@ -82,4 +85,30 @@ public class OpenTextTask {
         this.id = id;
     }
 
+
+    
+
+
+    public Integer getTaskOrder() {
+        return taskOrder;
+    }
+
+
+    public void setTaskOrder(Integer taskOrder) {
+        this.taskOrder = taskOrder;
+    }
+
+
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
+
+
+
+  
 }

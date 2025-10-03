@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 
 public class NewCourseDTO {
 
+    private Long id;
     @NotNull
     @NotBlank
     private String title;
@@ -19,6 +20,7 @@ public class NewCourseDTO {
     @Email
     private String emailInstructor;
 
+    
     public NewCourseDTO() {}
 
     public String getTitle() {
@@ -43,6 +45,14 @@ public class NewCourseDTO {
 
     public void setEmailInstructor(String emailInstructor) {
         this.emailInstructor = emailInstructor;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
 

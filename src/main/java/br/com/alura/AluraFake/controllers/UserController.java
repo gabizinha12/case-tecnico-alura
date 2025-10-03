@@ -29,12 +29,24 @@ public class UserController {
         if (userService.findByEmailUser(newUser.getEmail())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ErrorItemDTO("email", "Email já cadastrado no sistema"));
-        } else {
-            User user = newUser.toModel();
-            userService.createUser(user);
         }
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+            User user = new User(newUser.getName(), newUser.getEmail(), newUser.getRole());
+            userService.createUser(user);
 
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @Transactional
+    @PostMapping("/instructor/new")
+    public ResponseEntity newInstructor(@RequestBody @Valid NewUserDTO newUser) throws Exception {
+         if (userService.findByEmailUser(newUser.getEmail())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorItemDTO("email", "Email já cadastrado no sistema"));
+        }
+            User user = new User(newUser.getName(), newUser.getEmail(), newUser.getRole());
+            userService.createInstructor(user);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/user/all")
