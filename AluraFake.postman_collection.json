@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "5d7129e0-b2ab-4b88-9d5c-5c02d6716991",
+		"name": "AluraFake",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "8288259"
+	},
+	"item": [
+		{
+			"name": "Create new Open text task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"courseId\": 42,\r\n    \"statement\": \"O que aprendemos na aula de hoje?\",\r\n    \"type\": \"OPEN_TEXT\",\r\n    \"order\": 1\r\n   \r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/task/new/opentext"
+			},
+			"response": []
+		},
+		{
+			"name": "Create new single choice task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"courseId\": 42,\r\n        \"statement\": \"O que aprendemos hoje?\",\r\n        \"order\": 2,\r\n        \"options\": [\r\n            {\r\n                \"option\": \"Java\",\r\n                \"isCorrect\": true\r\n            },\r\n            {\r\n                \"option\": \"Python\",\r\n                \"isCorrect\": false\r\n            },\r\n            {\r\n                \"option\": \"Ruby\",\r\n                \"isCorrect\": false\r\n            }\r\n        ]\r\n      }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/task/new/singlechoice"
+			},
+			"response": []
+		},
+		{
+			"name": "Create new multiple choice task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"courseId\": 42,\r\n    \"statement\": \"O que aprendemos na aula de hoje?\",\r\n    \"type\": \"MULTIPLE_CHOICE\",\r\n    \"order\": 1\r\n   \r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/task/new/multiplechoice"
+			},
+			"response": []
+		},
+		{
+			"name": "Create new course",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n    \"title\":\"PHP\",\r\n    \"description\":\"Curso de PHP\",\r\n    \"instructor\":\"teste\",\r\n    \"emailInstructor\": \"teste@alura.com.br\",\r\n    \"status\":\"BUILDING\",\r\n    \"publishedAt\": \"03/10/2025\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/course/new"
+			},
+			"response": []
+		},
+		{
+			"name": "Publish course",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n    \"title\":\"PHP\",\r\n    \"description\":\"Curso de PHP\",\r\n    \"instructor\":\"teste\",\r\n    \"emailInstructor\": \"teste@alura.com.br\",\r\n    \"status\":\"BUILDING\",\r\n    \"publishedAt\": \"03/10/2025\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/course/1/publish"
+			},
+			"response": []
+		},
+		{
+			"name": "Create new user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"teste\",\r\n    \"email\":\"teste@alura.com.br\",\r\n    \"role\":\"INSTRUCTOR\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/instructor/new"
+			},
+			"response": []
+		},
+		{
+			"name": "Get courses",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/course/all"
+			},
+			"response": []
+		}
+	]
+}
